@@ -61,9 +61,10 @@ export async function addDeneme(formData: FormData) {
         .single();
 
     if (denemeError) {
-        console.error('Deneme eklenirken hata:', denemeError);
-        return { error: 'Deneme eklenirken bir hata oluştu.' };
-    }
+    console.error('Deneme eklenirken hata:', denemeError);
+    return;
+}
+
 
     // 2. Ders sonuçlarına deneme_id'yi ekle ve kaydet
     const dersKayitlari = dersSonuclari.map(sonuc => ({ ...sonuc, deneme_id: denemeData.id }));
@@ -73,10 +74,11 @@ export async function addDeneme(formData: FormData) {
         .insert(dersKayitlari);
 
     if (dersError) {
-        console.error('Ders sonuçları eklenirken hata:', dersError);
-        // İsteğe bağlı: Burada ana deneme kaydını silerek işlemi geri alabilirsiniz.
-        return { error: 'Ders sonuçları eklenirken bir hata oluştu.' };
-    }
+    console.error('Ders sonuçları eklenirken hata:', dersError);
+    // İsteğe bağlı: Burada ana deneme kaydını silerek işlemi geri alabilirsiniz.
+    return;
+}
+
 
     revalidatePath('/'); // Ana sayfadaki deneme listesini yenile
     redirect('/'); // Kullanıcıyı ana sayfaya yönlendir

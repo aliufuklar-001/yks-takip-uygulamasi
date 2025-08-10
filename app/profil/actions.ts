@@ -26,9 +26,11 @@ export async function updateProfile(formData: FormData) {
         .eq('id', user.id);
 
     if (error) {
-        console.error("Profil güncellenirken hata:", error);
-        return { error: "Profil güncellenirken bir hata oluştu." };
-    }
+    console.error("Profil güncellenirken hata:", error);
+    // Hata durumunda işlemi durdur, bir şey döndürme
+    return; 
+}
+
 
     revalidatePath('/profil');
     revalidatePath('/'); // Hedef bileşenini de yenilemek için
